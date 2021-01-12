@@ -27,13 +27,70 @@
 
 \begin{document}
 
-\begin{multicols*}{2}
 
 \section*{PSYC 402: Structural Equation Modelling}
 
 By Jack Zhou
 
-\section{Three types of models}
+\begin{multicols*}{2}
 
+% Any model can be thought of as a set of variables, of various sorts, to a set of parameter matrices of various sorts, 
+
+% and a set of equations, that express the relationships between the variables.
+
+% models are about explanation
+
+\section{Linear Algebra Review}
+
+TBD
+
+\section{Three classes of models}
+
+Structural Equations can be classified by 3 different classes.
+
+\subsection{Path Model}
+
+A path models can also be referred to as a multivariate regression model for observed cariables, or a causal model.
+
+A path model can contain $p$ dependent (\textit{endogenous}) variables and $q$ independent (\textit{exogenous}) variables, denoted as the following:
+
+\begin{itemize}
+    \item $\mathbf{\vec{y}}$: a $p \times 1$ vector of \textit{endogenous} observed variables
+    \item $\mathbf{\vec{x}}$: a $q \times 1$ vector of \textit{exogenous} observed variables
+    \item $\mathbf{\vec{\zeta}}$: a $p \times 1$ vector of residuals
+\end{itemize}
+
+As suggested by the match of dimensionality between $\mathbf{\vec{y}}$ and $\mathbf{\vec{\zeta}}$, each of the entries in $\mathbf{\vec{y}}$ corresponds to a value in $\mathbf{\vec{\zeta}}$ with the same index. That is, for each dependent variable $\mathbf{\vec{y}}_i$, we have a corresponding residual $\mathbf{\vec{\zeta}}_i$ that the model is unable to account for.
+
+It is important to note that path models do not contain any latent (unobserved) variables, as we can see in the following equation: 
+
+\[\mathbf{\vec{y}} = [\mathbf{B} \mathbf{\vec{y}} + \mathbf{\Gamma} \mathbf{\vec{x}}] + \mathbf{\vec{\zeta}}\]
+
+The general interpretation is that with this model, the set of endogenous variables are to be described in terms of a sum between the structural model $[\mathbf{B} \mathbf{\vec{y}} + \mathbf{\Gamma} \mathbf{\vec{x}}]$ and residuals $\mathbf{\vec{\zeta}}$.
+
+The model consists of two parts, the $\mathbf{B} \mathbf{\vec{y}}$ term describes the regression of endogenous variables onto themselves, and the $\mathbf{\Gamma} \mathbf{\vec{x}}$ term describes the regression of exogenous variables onto the endogenous variables, in combined effort to best account for the endogenous variables.
+
+One glaring issue is that in order to solve for $\mathbf{\vec{y}}$, it should only be on one side of the equation, not both. We can address this with algebra:
+
+\[
+\begin{aligned}
+    \mathbf{\vec{y}} &= [\mathbf{B} \mathbf{\vec{y}} + \mathbf{\Gamma} \mathbf{\vec{x}}] + \mathbf{\vec{\zeta}} \\
+    \mathbf{\vec{y}} - \mathbf{B} \mathbf{\vec{y}} &= \mathbf{\Gamma} \mathbf{\vec{x}} + \mathbf{\vec{\zeta}} \\
+    (I - \mathbf{B}) \mathbf{\vec{y}} &= \mathbf{\Gamma} \mathbf{\vec{x}} + \mathbf{\vec{\zeta}} \\
+    \mathbf{\vec{y}} &= (I - \mathbf{B})^{-1}(\mathbf{\Gamma} \mathbf{\vec{x}} + \mathbf{\vec{\zeta}}) \\
+\end{aligned}    
+\]
+
+The equation $\mathbf{\vec{y}} = (I - \mathbf{B})^{-1}(\mathbf{\Gamma} \mathbf{\vec{x}} + \mathbf{\vec{\zeta}})$ is known as the reduced form, which is easier to work with mathematically.
+
+Below are descriptions to all the matrices in a path model:
+\begin{itemize}
+    \item $\mathbf{B}$ : $p \times p$ regression coefficients for $\mathbf{\vec{y}}$
+    \item $\mathbf{\Gamma}$ : $q \times q$ regression coefficients for $\mathbf{\vec{x}}$
+    \item $\mathbf{\Phi}$ : $q \times q$ covariance matrix of $\mathbf{\vec{x}}$
+    \item $\mathbf{\Psi}$ : $p \times p$ covariance matrix of $\mathbf{\vec{\zeta}}$
+\end{itemize}
+
+$\mathbf{\Phi}$ and $\mathbf{\Psi}$ are matrices that aren't seen in the model.
 \end{multicols*}
 \end{document}
