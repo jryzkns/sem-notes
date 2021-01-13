@@ -22,8 +22,11 @@
 \usepackage{multicol}
 
 \usepackage{titlesec}
-
+\usepackage{float}
 \titleformat*{\section}{\large\bfseries}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
 
 \begin{document}
 
@@ -91,6 +94,47 @@ Below are descriptions to all the matrices in a path model:
     \item $\mathbf{\Psi}$ : $p \times p$ covariance matrix of $\mathbf{\vec{\zeta}}$
 \end{itemize}
 
-$\mathbf{\Phi}$ and $\mathbf{\Psi}$ are matrices that aren't seen in the model.
+Note that $\mathbf{\Phi}$ and $\mathbf{\Psi}$ are matrices that aren't seen in the model. 
+
+% TODO: move this to linalge review
+For any covariance matrix $\mathbf{M}$, any $\mathbf{M}_{ii}$ entry is the variance of the $i$th variable and any $\mathbf{M}_{ij}$ entry is the covariance between the $i$th and $j$th variable.
+
+$\mathbf{\Phi}$ can be considered a parameter for $\mathbf{\vec{y}}$. Therefore, we consider it as a starting point.
+
+Often times we see correlations between residuals (ex. in longitudinal models), so $\mathbf{\Psi}$ does not necessarily have to be diagonal.
+
+\subsubsection{Kinds of Path Models}
+
+\begin{itemize}
+    \item \textbf{Standard Multiple Regression}
+
+    Suppose we have an endogenous variable $y_1$, its corresponding $\zeta_1$, and a set of exogenous variables $\{x_1,...,x_q\}$. A Standard Multiple Regression can be seen as a digraph with the following properties:
+    
+    \begin{itemize}
+        \item An edge $(\zeta_1, y_1)$ exists; the residual impacts the endogenous variable
+        \item For all $x_i$ in the set of exogenous variables, an edge $(x_i, y_1)$ exists; each of the exogenous varibales impacts the endogenous variable
+        \item For all $x_i \neq x_j$, an edge $(x_i, x_j)$ exists to indicate correlations between exogenous variables
+        
+    \end{itemize}
+    
+    Let $\mathbf{\vec{x}}$ be a $p \times 1$ vector of exogenous variables, $\Gamma$ be a $1 \times q$ vector of regression coefficients for $\mathbf{\vec{x}}$, then such graph can be written as an equation as follows: \[y_1 = \Gamma \mathbf{\vec{x}} + \zeta_1\]
+
+    \item \textbf{Standard Multivariate Regression}
+    
+    In this case, there are greater than $p > 1$ endogenous variables as well as $q > 1$ exogenous variables. 
+    
+    The setting is similar to the Standard Multiple Regression case, but there is more than one $y_i$, but no edges between any $y_i \neq y_j$ (no correlation between any endogenous variables).
+
+    In addition to the notation used in standard multiple regression, we let $\mathbf{\vec{y}}$ be the $p \times 1$ vector of endogenous variables, and $\mathbf{B}$ be a $p \times p$ matrix as defined before. As the model asserts that there are no correlations between any endogenous variables, $\mathbf{B}$ is a zero matrix, and the covariance matrix of $\mathbf{\vec{y}}$, $\mathbf{\Psi}$, is taken to be diagonal.
+
+    \item \textbf{First Order Autoregressive Time Series}
+    
+    A chain of measurements are collected in sequential order, imposing a temporal structure.
+
+    The first measurement is considered exogenous, so we would name it $x_1$. From there on, each measurement that comes after are all endogenous variables $y_i$ with residuals $\zeta_i$. 
+    
+    Each variable is linearly dependent on the variable before, causing a chain of dependencies.
+\end{itemize}
+
 \end{multicols*}
 \end{document}
