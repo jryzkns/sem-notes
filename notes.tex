@@ -136,5 +136,52 @@ Often times we see correlations between residuals (ex. in longitudinal models), 
     Each variable is linearly dependent on the variable before, causing a chain of dependencies.
 \end{itemize}
 
+\subsection{Linear Factor/Measurement Models}
+
+In the basic treatment, we have the following variables.
+
+\begin{itemize}
+    \item $\mathbf{\vec{x}}$: a $q \times 1$ vector of \textit{indicators} (observed variables)
+    \item $\mathbf{\vec{\xi}}$: a $n \times 1$ vector of \textit{latent}, common-factor variables
+    \item $\mathbf{\vec{\delta}}$: a $q \times 1$ vector of measurement error variables
+\end{itemize}
+
+In a parallel alternative form, we have these instead:
+
+\begin{itemize}
+    \item $\mathbf{\vec{y}}$: a $q \times 1$ vector of \textit{indicators} (observed variables)
+    \item $\mathbf{\vec{\eta}}$: a $n \times 1$ vector of \textit{latent}, common-factor variables
+    \item $\mathbf{\vec{\epsilon}}$: a $q \times 1$ vector of measurement error variables
+\end{itemize}
+
+Note that here we have a set of observed variables and a set of latent variables. The observed variables play the role in trying to determine the latent variables. Imagine measuring intelligence (abstract and latent) with test scores (indicators; concrete and observable).
+
+Under Spearman, all $\mathbf{\vec{x}}_i$ is causally (regression) dependent upon a $\mathbf{\vec{\xi}}_i$ for some $i$. Moreover, upon regressing $\mathbf{\vec{x}}$ on $\mathbf{\vec{\xi}}$, within-correlations in $\mathbf{\vec{x}}$ no longer exist.
+
+In other words, the reason why different $\mathbf{\vec{x}}_i$ could be correlated is because they arise from a common latent variable; $\mathbf{\vec{\xi}}$ can be taken as an explanation as to why within-correlations in $\mathbf{\vec{x}}$ exist.
+
+We can summarize this model with the following formula:
+
+\[\mathbf{\vec{x}} = \mathbf{\Lambda_x}\mathbf{\vec{\xi}} + \mathbf{\vec{\delta}}\]
+
+Where $\mathbf{\Lambda_x}$ is $q \times n$ matrix called factor loadings, linking the indicators to the latent variables.
+
+There is also a $n \times n$ matrix $\mathbf{\Phi}$, which is the covariance matrix of $\mathbf{\vec{\xi}}$. Typically there are many restriction on this matrix, for example we would assert it to be a diagonal matrix for orthogonality.
+
+Finally, we also have covariance for $\mathbf{\vec{\delta}}$ as $\mathbf{\Theta_\delta}$, a $q \times q$ matrix. Recall that upon regression, the indicators become uncorrelated, suggesting $\mathbf{\Theta_\delta}$ is typically diagonal.
+
+\subsubsection{Correlation accross sets of indicator/latent variables}
+
+Sometimes we are interested in the correlation between multiple latent variables, and the only access we have towards them are their indicators, so the correlation would have to run on some linear weighted composite of the indicators per grouping.
+
+The resulting correlation, which is used to indicate the correlation between the actual latent variables, is known to be less than the actual correlation between the latent variables.
+
+To account for this issue, a mechanism of disattenuation is used. For two latent variables $\tau_1,\tau_2$, their correlation $\rho_{\tau_1,\tau_2}$ can be determined by a function of observed composites $c_1, c_2$ (respectively) as follows:
+
+\[\rho_{\tau_1,\tau_2} = \frac{\rho_{c_1, c_2}}{\sqrt{\rho_{c_1, c_1'} \cdot \rho_{c_2, c_2'}}}\]
+
+Where $\rho_{c_1, c_1'}$ denotes reliability for $c_1$, and likewise for $c_2$. This is known as the disattenuating correlation formula.
+
+With structural equation modelling, we can add an edge to the path diagram that joins the latent variables and work from there, without the need for disattenuation.
 \end{multicols*}
 \end{document}
