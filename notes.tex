@@ -89,7 +89,7 @@ The equation $\mathbf{\vec{y}} = (I - \mathbf{B})^{-1}(\mathbf{\Gamma} \mathbf{\
 Below are descriptions to all the matrices in a path model:
 \begin{itemize}
     \item $\mathbf{B}$ : $p \times p$ regression coefficients for $\mathbf{\vec{y}}$
-    \item $\mathbf{\Gamma}$ : $q \times q$ regression coefficients for $\mathbf{\vec{x}}$
+    \item $\mathbf{\Gamma}$ : $p \times q$ regression coefficients for $\mathbf{\vec{x}}$
     \item $\mathbf{\Phi}$ : $q \times q$ covariance matrix of $\mathbf{\vec{x}}$
     \item $\mathbf{\Psi}$ : $p \times p$ covariance matrix of $\mathbf{\vec{\zeta}}$
 \end{itemize}
@@ -237,9 +237,87 @@ In line with the notation as previously introduced before, we have the following
 
 A model is a candidate explanation of the joint distribution of a set of observable varibles. We place restrictions on parameter matrices in a model, reducing its complexity and also targetting specific aspects of the joint distribution. Typically targetting a set of association parameters within the distribution. In structural equation modelling, we are interested in the covariances $\mathbf{\Sigma}$ between the variables at the population level.
 
+% ?
 Placing restrictions effectively reduces the amount of parameters to estimate. Typically we want the number of parameters to estimate $t$ to be lower than the amount of input data elements $r$, so there needs to be lots of restrictions placed on the model.
 
-By using a model with parameter matrices, we can denote the parameter matrices collectively as $\mathbf{\vec{\Theta}}$. We use $\mathbf{\vec{\Theta}}$ to estimate $\mathbf{\Sigma}$, denoted as $\mathbf{\hat{\Sigma}}(\mathbf{\vec{\Theta}})$, a function of $\mathbf{\vec{\Theta}}$. Once $\mathbf{\vec{\Theta}}$ is determined, we can find $\mathbf{\hat{\Sigma}}(\mathbf{\vec{\Theta}})$ and determine its likeliness to a sample estimate $s$ of $\mathbf{\vec{\Sigma}}$.
+By using a model with parameter matrices, we can denote the set of parameters to estimate as $\mathbf{\vec{\Theta}}$. We use $\mathbf{\vec{\Theta}}$ to estimate $\mathbf{\Sigma}$, denoted as $\mathbf{\hat{\Sigma}}(\mathbf{\vec{\Theta}})$, a function of $\mathbf{\vec{\Theta}}$. 
+
+Once $\mathbf{\vec{\Theta}}$ is determined, we can find $\mathbf{\hat{\Sigma}}(\mathbf{\vec{\Theta}})$ and determine its likeliness to a sample estimate $s$ of $\mathbf{\vec{\Sigma}}$.
+
+\section{Approach}
+
+To begin, for a model from any of the three classes previously discussed, we proceed in a sequence of steps. We will discuss solely in terms of a observed variable path model, where no latent variables are considered.
+
+\subsection{Rendering}
+
+The rendering stage effectively generates a path diagram after specifying the observed and latent variables. The relationships between the variables are discussed and established and a diagram is drawn. 
+
+The convention for drawing diagrams suggests drawing ellipsis for latent variables and rectangles for observed variables. Residuals are usually drawn with no enclosing shape.
+
+% It is important to note that observed variables are either indicators or otherwise.
+
+A single headed arrow denotes a regression dependency, where a double headed arrow denotes a correlational relationship.
+
+Suppose a variable $a$ has a regression dependency on another variable $b$, and $b$ has a regression dependency on $a$, then a feedback loop is created and the entire model is said to be non-recursive.
+
+\subsection{Mathematization}
+
+The mathematization stage takes in a path diagram and re-expresses the diagram in terms of mathematical formulas.
+
+Conventionally we have the following values to denote the number of variables in a model:
+
+\begin{itemize}
+    \item NX: Number of $\mathbf{x}$ variables
+    \item NY: Number of $\mathbf{y}$ variables
+    \item NK: Number of $\mathbf{\xi}$ variables
+    \item NE: Number of $\mathbf{\eta}$ variables
+    \item NZ: Number of $\mathbf{\zeta}$ variables
+\end{itemize}
+
+Note that since we are working with observed value path models, NK=NE=0.
+
+Given these values, we can determine the dimensionality of $\mathbf{B}$, $\mathbf{\Gamma}$, $\mathbf{\Phi}$, $\mathbf{\Psi}$ and fill in entries based on connections in the path diagram. 
+
+Often the parameters in the path diagram have subscripts that determine which index it belongs in for the corresponding matrix. For example, $\gamma_{13}$ indicates that it belongs to row 1 column 3 for $\mathbf{\Gamma}$.
+
+Usually for $\mathbf{\Phi}$ and $\mathbf{\Psi}$ the parameters may not be indicated explicitly, but as a general rule the diagonal elements (the variances) are by default nonzero.
+
+From this information, we can generate a model implied covariance matrix $\hat{\mathbf{\Sigma}}(\mathbf{\vec{\Theta}})$, note that it is a matrix for the joint distribution, which means its dimensionality is $(NX+NY) \times (NX+NY)$. We can partition $\hat{\mathbf{\Sigma}}(\mathbf{\vec{\Theta}})$ as follows:
+
+\[
+\hat{\mathbf{\Sigma}}(\mathbf{\vec{\Theta}}) = 
+\left[
+    \begin{array}{c|c}
+        \hat{\mathbf{\Sigma}}_y(\mathbf{\vec{\Theta}}) & 
+        \hat{\mathbf{\Sigma}}_{yx}(\mathbf{\vec{\Theta}})\\
+        \hline
+        \hat{\mathbf{\Sigma}}_{xy}(\mathbf{\vec{\Theta}}) &
+        \mathbf{\Phi}
+    \end{array}
+\right]
+\]
+
+Where 
+\[
+\hat{\mathbf{\Sigma}}_y(\mathbf{\vec{\Theta}})
+= (I - \mathbf{B})^{-1}
+\left[
+\mathbf{\Gamma}\mathbf{\Phi}\mathbf{\Gamma}^T 
++ \mathbf{\Psi}
+\right]
+((I - \mathbf{B})^{-1})^T
+\]
+
+and 
+
+\[
+\hat{\mathbf{\Sigma}}_{yx}(\mathbf{\vec{\Theta}})
+= (I - \mathbf{B})^{-1}\mathbf{\Gamma}^T\mathbf{\Phi}
+\]
+
+\subsection{Identification}
+
+TBD
 
 \end{multicols*}
 \end{document}
