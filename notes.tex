@@ -183,5 +183,63 @@ To account for this issue, a mechanism of disattenuation is used. For two latent
 Where $\rho_{c_1, c_1'}$ denotes reliability for $c_1$, and likewise for $c_2$. This is known as the disattenuating correlation formula.
 
 With structural equation modelling, we can add an edge to the path diagram that joins the latent variables and work from there, without the need for disattenuation.
+
+\subsection{Multivariate Regression Model for Latent Variables}
+
+Often known as the full model, a multivariate regression model for latent works like a causal model in latent terms. We have the following variables: 
+
+\begin{itemize}
+    \item $\mathbf{\vec{\eta}}$: a $m \times 1$ vector of latent endogenous variables
+    \item $\mathbf{\vec{\xi}}$: a $n \times 1$ vector of latent exogenous variables
+    \item $\mathbf{\vec{\zeta}}$: a $m \times 1$ vector of residuals
+    \item $\mathbf{\vec{x}}$: a $q \times 1$ vector of indicators of $\mathbf{\vec{\xi}}$
+    \item $\mathbf{\vec{y}}$: a $p \times 1$ vector of indicators of $\mathbf{\vec{\eta}}$
+    \item $\mathbf{\vec{\delta}}$: a $q \times 1$ vector of measurement errors on $\mathbf{\vec{x}}$
+    \item $\mathbf{\vec{\epsilon}}$: a $p \times 1$ vector of measurement errors on $\mathbf{\vec{y}}$
+\end{itemize}
+
+In terms of equations, we have the following:
+
+\begin{itemize}
+    \item \textbf{Regresion Model For Unobservables}
+    \[\mathbf{\vec{\eta}} = \mathbf{B}\mathbf{\vec{\eta}} + \mathbf{\Gamma}\mathbf{\vec{\xi}} + \mathbf{\vec{\zeta}}\]
+    \item \textbf{Measurement Model for $\mathbf{\vec{x}}$}
+    \[\mathbf{\vec{x}} = \mathbf{\Lambda_x}\mathbf{\vec{\xi}} + \mathbf{\vec{\delta}}\]
+    \item \textbf{Measurement Model for $\mathbf{\vec{y}}$}
+    \[\mathbf{\vec{y}} = \mathbf{\Lambda_y}\mathbf{\vec{\eta}} + \mathbf{\vec{\epsilon}}\]
+\end{itemize}
+
+In line with the notation as previously introduced before, we have the following parameter matrices:
+
+\begin{itemize}
+    \item $\mathbf{B}$: a $m \times m$ regression matrix for $\mathbf{\vec{\eta}}$ on $\mathbf{\vec{\eta}}$
+    
+    As it makes no sense to say that an $\mathbf{\vec{\eta}}_i$ is dependent on $\mathbf{\vec{\eta}}_i$ itself, the diagonal elements of $\mathbf{B}$ are zero.
+
+    \item $\mathbf{\Gamma}$: a $m \times n$ regression matrix for $\mathbf{\vec{\xi}}$ on $\mathbf{\vec{\eta}}$
+    
+    The entries in $\mathbf{\Gamma}$ are usually handpicked to be zero or nonzero. It essentially spells out our beliefs of how $\mathbf{\vec{\eta}}$ relates to $\mathbf{\vec{\xi}}$.
+
+    \item $\mathbf{\Phi}$: a $n \times n$ covariance matrix of $\mathbf{\vec{\xi}}$
+    \item $\mathbf{\Psi}$: a $m \times m$ covariance matrix of $\mathbf{\vec{\zeta}}$
+
+    \item $\mathbf{\Lambda_x}$: a $ q \times n$ matrix of loadings
+
+    \item $\mathbf{\Theta_\delta}$: a $q \times q$ covariance matrix of $\mathbf{\vec{x}}$
+
+    \item $\mathbf{\Lambda_y}$: a $p \times m$ matrix of loadings
+
+    \item $\mathbf{\Theta_\epsilon}$: a $p \times p$ covariance matrix of $\mathbf{\vec{y}}$
+    
+\end{itemize}
+
+\section{Aims of Modelling}
+
+A model is a candidate explanation of the joint distribution of a set of observable varibles. We place restrictions on parameter matrices in a model, reducing its complexity and also targetting specific aspects of the joint distribution. Typically targetting a set of association parameters within the distribution. In structural equation modelling, we are interested in the covariances $\mathbf{\Sigma}$ between the variables at the population level.
+
+Placing restrictions effectively reduces the amount of parameters to estimate. Typically we want the number of parameters to estimate $t$ to be lower than the amount of input data elements $r$, so there needs to be lots of restrictions placed on the model.
+
+By using a model with parameter matrices, we can denote the parameter matrices collectively as $\mathbf{\vec{\Theta}}$. We use $\mathbf{\vec{\Theta}}$ to estimate $\mathbf{\Sigma}$, denoted as $\mathbf{\hat{\Sigma}}(\mathbf{\vec{\Theta}})$, a function of $\mathbf{\vec{\Theta}}$. Once $\mathbf{\vec{\Theta}}$ is determined, we can find $\mathbf{\hat{\Sigma}}(\mathbf{\vec{\Theta}})$ and determine its likeliness to a sample estimate $s$ of $\mathbf{\vec{\Sigma}}$.
+
 \end{multicols*}
 \end{document}
