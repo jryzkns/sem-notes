@@ -43,9 +43,53 @@ By Jack Zhou
 
 % models are about explanation
 
-\section{Linear Algebra Review}
+\section{Algebra Review}
+
+Let capital letters be matrices, lowercase letters be random vectors, and greek lowercase letters be constant vectors. We proceed with some definitions.
+
+\subsection{Matrix Algebra}
 
 TBD
+
+\subsection{Expectation Algebra}
+
+An expectation operator is denoted as $\mathbb{E}[\cdot]$, it has the following properties:
+
+\begin{itemize}
+    \item $\mathbb{E}[Az] = A \mathbb{E}[z]$
+    \item $\mathbb{E}[\alpha] = \alpha$
+    \item $\mathbb{E}[z + r] = \mathbb{E}[z] + \mathbb{E}[r]$
+\end{itemize}
+
+\subsection{Variance/Covariance Algebra}
+
+The covariance operator is denoted as $\textrm{Cov}[\cdot]$. It is defined as follows:
+
+\[\begin{aligned}
+    \textrm{Cov}[x, y] &= \mathbb{E}\left[(x - \mathbb{E}[x])(y - \mathbb{E}[y])^T\right] \\
+    & = \mathbb{E}\left[xy^T\right] - \mathbb{E}[x]\mathbb{E}[y]^T
+\end{aligned}\]
+
+If only one argument is given to $\textrm{Cov}[\cdot]$, then it is understood that both arguments are the same (ex. $\textrm{Cov}[a] = \textrm{Cov}[a, a] = \textrm{Var}[a]$).
+
+Below are some properties of the covariance operator:
+
+\begin{itemize}
+    \item $\textrm{Cov}[Az] = A \textrm{Cov}[z] A^T$
+    \item $\textrm{Cov}[x+y] = \textrm{Cov}[x] + \textrm{Cov}[x, y] + \textrm{Cov}[y, x] + \textrm{Cov}[y]$
+    \item $\textrm{Cov}[x,y+z] = \textrm{Cov}[x,y] + \textrm{Cov}[x, z]$
+    \item $\textrm{Cov}[x,\alpha] = 0$
+\end{itemize}
+
+The following result is particularly useful:
+
+\[\begin{aligned}
+    &\textrm{Cov}[Az+\dagger]\\
+    =& \textrm{Cov}[Az] + \textrm{Cov}[Az,\dagger] + \textrm{Cov}[\dagger, Az] + \textrm{Cov}[\dagger]\\
+    =& A\textrm{Cov}[z]A^T + A\textrm{Cov}[z,\dagger] + \textrm{Cov}[\dagger, z]A^T + \textrm{Cov}[\dagger]\\
+\end{aligned}\]
+
+$\dagger$ can either be a random vector or constant. If it is a constant, then $A\textrm{Cov}[z,\dagger] + \textrm{Cov}[\dagger, z]A^T + \textrm{Cov}[\dagger] = 0$.
 
 \section{Three classes of models}
 
